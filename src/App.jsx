@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 /* Storefront */
 import Header from "./components/Header";
@@ -21,13 +21,16 @@ import ProtectedAdmin from "./components/admin/ProtectedAdmin";
 import AdminLayout from "./components/admin/AdminLayout";
 
 export default function App() {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin");
+
   return (
     <>
-      {/* Storefront Header */}
-      <Header />
+      {/* Show Header ONLY for storefront */}
+      {!isAdmin && <Header />}
 
       <Routes>
-        {/* -------- STORE ROUTES -------- */}
+        {/* -------- STORE -------- */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<ShopAll />} />
         <Route path="/category/:name" element={<Category />} />
@@ -40,7 +43,7 @@ export default function App() {
         {/* -------- ADMIN LOGIN -------- */}
         <Route path="/admin" element={<AdminLogin />} />
 
-        {/* -------- ADMIN PROTECTED ROUTES -------- */}
+        {/* -------- ADMIN (PROTECTED) -------- */}
         <Route
           path="/admin/*"
           element={
@@ -55,8 +58,7 @@ export default function App() {
         </Route>
       </Routes>
 
-      {/* WhatsApp floating button */}
-      <WhatsAppChat />
+      {!isAdmin && <WhatsAppChat />}
     </>
   );
 }
