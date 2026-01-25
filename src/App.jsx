@@ -26,11 +26,11 @@ export default function App() {
 
   return (
     <>
-      {/* Show Header ONLY for storefront */}
+      {/* Storefront Header */}
       {!isAdmin && <Header />}
 
       <Routes>
-        {/* -------- STORE -------- */}
+        {/* ---------- STORE ---------- */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<ShopAll />} />
         <Route path="/category/:name" element={<Category />} />
@@ -40,10 +40,10 @@ export default function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/about" element={<About />} />
 
-        {/* -------- ADMIN LOGIN -------- */}
+        {/* ---------- ADMIN LOGIN ---------- */}
         <Route path="/admin" element={<AdminLogin />} />
 
-        {/* -------- ADMIN (PROTECTED) -------- */}
+        {/* ---------- ADMIN (PROTECTED) ---------- */}
         <Route
           path="/admin/*"
           element={
