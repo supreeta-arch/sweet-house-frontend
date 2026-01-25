@@ -1,21 +1,21 @@
 import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
+import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
 import ShopAll from "./pages/ShopAll";
+import Category from "./pages/Category";
 import ProductDetails from "./pages/ProductDetails";
 import About from "./pages/About";
 
-/* Admin */
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
-import AdminProducts from "./pages/admin/Products";
-import AdminOrders from "./pages/admin/Orders";
+import Products from "./pages/admin/Products";
 
-/* Guards */
 import AdminRoute from "./components/admin/AdminRoute";
 
-export default function App() {
+function App() {
   return (
     <>
       <Header />
@@ -24,25 +24,27 @@ export default function App() {
         {/* Public */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<ShopAll />} />
+        <Route path="/category/:slug" element={<Category />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/about" element={<About />} />
 
-        {/* Admin Login */}
+        {/* Admin */}
         <Route path="/admin" element={<AdminLogin />} />
-
-        {/* Admin Protected */}
         <Route
-          path="/admin/*"
+          path="/admin/dashboard"
           element={
             <AdminRoute>
               <AdminLayout />
             </AdminRoute>
           }
         >
-          <Route path="products" element={<AdminProducts />} />
-          <Route path="orders" element={<AdminOrders />} />
+          <Route path="products" element={<Products />} />
         </Route>
       </Routes>
+
+      <Footer />
     </>
   );
 }
+
+export default App;
