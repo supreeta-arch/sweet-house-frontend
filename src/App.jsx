@@ -20,7 +20,6 @@ import Orders from "./pages/admin/Orders";
 import ProtectedAdmin from "./components/admin/ProtectedAdmin";
 import AdminLayout from "./components/admin/AdminLayout";
 
-
 export default function App() {
   return (
     <>
@@ -38,15 +37,12 @@ export default function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/about" element={<About />} />
 
-       
-
-
         {/* -------- ADMIN LOGIN -------- */}
         <Route path="/admin" element={<AdminLogin />} />
 
-        {/* -------- ADMIN PROTECTED -------- */}
+        {/* -------- ADMIN PROTECTED ROUTES -------- */}
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
             <ProtectedAdmin>
               <AdminLayout />
