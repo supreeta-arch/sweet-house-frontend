@@ -3,49 +3,43 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+// Public pages
 import Home from "./pages/Home";
 import ShopAll from "./pages/ShopAll";
 import Category from "./pages/Category";
-import ProductDetails from "./pages/ProductDetails";
-import About from "./pages/About";
+import CartPage from "./pages/CartPage";
 
+// Admin
 import AdminLogin from "./pages/admin/AdminLogin";
-import AdminLayout from "./pages/admin/AdminLayout";
-import Products from "./pages/admin/Products";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AdminRoute from "./routes/AdminRoute";
 
-import AdminRoute from "./components/admin/AdminRoute";
-
-function App() {
+export default function App() {
   return (
     <>
       <Header />
 
       <Routes>
-        {/* Public */}
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<ShopAll />} />
+        <Route path="/shop-all" element={<ShopAll />} />
         <Route path="/category/:slug" element={<Category />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/cart" element={<CartPage />} />
 
-        {/* Admin */}
+        {/* ADMIN ROUTES */}
         <Route path="/admin" element={<AdminLogin />} />
 
         <Route
-          path="/admin/dashboard"
+          path="/admin/products"
           element={
             <AdminRoute>
-              <AdminLayout />
+              <AdminProducts />
             </AdminRoute>
           }
-        >
-          <Route path="products" element={<Products />} />
-        </Route>
+        />
       </Routes>
 
       <Footer />
     </>
   );
 }
-
-export default App;
