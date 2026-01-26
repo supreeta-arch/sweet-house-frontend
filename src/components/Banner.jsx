@@ -1,21 +1,17 @@
-const sweetsLeft = new URL("../assets/banner/sweets-left.png", import.meta.url).href;
-const sweetsRight = new URL("../assets/banner/sweets-right.png", import.meta.url).href;
-const ladoo = new URL("../assets/banner/ladoo.png", import.meta.url).href;
-
 export default function Banner() {
   return (
     <section className="relative w-full bg-primary py-[56px] overflow-visible">
 
       {/* LEFT CORNER SWEETS */}
       <img
-        src={sweetsLeft}
+        src={`${import.meta.env.BASE_URL}banner/sweets-left.png`}
         alt=""
         className="absolute left-0 top-0 w-[420px] z-0 pointer-events-none"
       />
 
       {/* RIGHT CORNER SWEETS */}
       <img
-        src={sweetsRight}
+        src={`${import.meta.env.BASE_URL}banner/sweets-right.png`}
         alt=""
         className="absolute right-0 bottom-0 w-[420px] z-0 pointer-events-none"
       />
@@ -57,12 +53,12 @@ export default function Banner() {
             {/* BOWL CLUSTER */}
             <div className="absolute right-[24px] bottom-[18px]">
               <img
-                src={ladoo}
+                src={`${import.meta.env.BASE_URL}banner/ladoo.png`}
                 className="absolute w-[95px] right-[22px] bottom-[32px] opacity-90"
                 alt=""
               />
               <img
-                src={ladoo}
+                src={`${import.meta.env.BASE_URL}banner/ladoo.png`}
                 className="relative w-[120px]"
                 alt=""
               />
