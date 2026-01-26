@@ -1,14 +1,23 @@
 import { useParams, Link } from "react-router-dom";
-import { getProducts } from "../data/products";
+import * as ProductsData from "../data/products";
 import { useCart } from "../context/CartContext";
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { addToCart } = useCart();
 
-  // ✅ dynamic products
-  const products = getProducts();
+  // ✅ Support ALL products.js export styles safely
+  let products = [];
 
+  if (typeof ProductsData.getProducts === "function") {
+    products = ProductsData.getProducts();
+  } else if (Array.isArray(ProductsData.products)) {
+    products = ProductsData.products;
+  } else if (Array.isArray(ProductsData.default)) {
+    products = ProductsData.default;
+  }
+
+  // ✅ Always compare as string
   const product = products.find(
     (p) => String(p.id) === String(id)
   );
@@ -16,10 +25,15 @@ export default function ProductDetails() {
   if (!product) {
     return (
       <div className="max-w-7xl mx-auto px-6 py-20">
-        <p className="text-gray-500">Product not found.</p>
+        <h2 className="text-xl font-semibold mb-4">
+          Product not found
+        </h2>
+        <p className="text-gray-500 mb-6">
+          The product you are looking for does not exist.
+        </p>
         <Link
           to="/shop-all"
-          className="text-purple-600 underline mt-4 inline-block"
+          className="text-purple-600 underline"
         >
           Back to Shop All
         </Link>
@@ -30,7 +44,7 @@ export default function ProductDetails() {
   const relatedProducts = products.filter(
     (p) =>
       p.category === product.category &&
-      p.id !== product.id
+      String(p.id) !== String(product.id)
   );
 
   return (
@@ -41,16 +55,13 @@ export default function ProductDetails() {
           Home
         </Link>{" "}
         /{" "}
-        <Link
-          to={`/category/${product.category}`}
-          className="hover:underline"
-        >
-          {product.category.replace("-", " ")}
+        <Link to="/shop-all" className="hover:underline">
+          Shop All
         </Link>{" "}
         / <span className="text-gray-700">{product.name}</span>
       </nav>
 
-      {/* Product */}
+      {/* Product section */}
       <div className="grid md:grid-cols-2 gap-12">
         <div className="border rounded-xl p-6 bg-white">
           {product.image ? (
@@ -61,7 +72,7 @@ export default function ProductDetails() {
             />
           ) : (
             <div className="h-96 flex items-center justify-center text-gray-400">
-              No image
+              No image available
             </div>
           )}
         </div>
@@ -72,10 +83,11 @@ export default function ProductDetails() {
           </h1>
 
           <p className="text-lg text-gray-700 mb-4">
-            ₹{product.price} / {product.weight}
+            ₹{product.price}{" "}
+            {product.weight && `/ ${product.weight}`}
           </p>
 
-          {product.ingredients && (
+          {Array.isArray(product.ingredients) && (
             <>
               <h3 className="font-semibold mb-2">
                 Ingredients
@@ -89,9 +101,7 @@ export default function ProductDetails() {
           )}
 
           <button
-            onClick={() =>
-              addToCart({ ...product, quantity: 1 })
-            }
+            onClick={() => addToCart(product)}
             className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
           >
             ADD TO CART
