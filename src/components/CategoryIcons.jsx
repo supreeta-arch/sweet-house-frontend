@@ -1,27 +1,33 @@
 const BASE = import.meta.env.BASE_URL;
 
-export default function CategoryIcons({ type }) {
-  const icons = {
-    combos: "icons/combos",
-    grocery: "icons/grocery",
-    sweets: "icons/sweets",
-    spices: "icons/spices",
-    dryfruits: "icons/dryfruits",
-    organic: "icons/organic",
-    gifting: "icons/gifting",
-    chips: "icons/chips",
-  };
+const ICONS = {
+  combos: "icons/combos.png",
+  grocery: "icons/grocery.png",
+  sweets: "icons/sweets.png",
+  spices: "icons/spices.png",
+  dryfruits: "icons/dryfruits.png",
+  organic: "icons/organic.png",
+  gifting: "icons/gifting.png",
+  chips: "icons/chips.png",
+};
 
-  const iconPath = icons[type];
+export default function CategoryIcons({ type, label }) {
+  const src = ICONS[type];
 
-  if (!iconPath) return null;
+  if (!src) {
+    console.warn("Missing icon for:", type);
+    return null;
+  }
 
   return (
-    <img
-      src={`${BASE}${iconPath}`}
-      alt={type}
-      loading="lazy"
-      className="w-14 h-14 object-contain"
-    />
+    <div className="flex flex-col items-center">
+      <img
+        src={`${BASE}${src}`}
+        alt={label || type}
+        className="w-16 h-16 object-contain mb-2"
+        loading="lazy"
+      />
+      <span className="text-sm font-medium text-center">{label}</span>
+    </div>
   );
 }
