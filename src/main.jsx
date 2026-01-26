@@ -2,21 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 import App from "./App";
-
-// ✅ GLOBAL CSS (TAILWIND)
 import "./index.css";
 
-import { CartProvider } from "./context/CartContext";
-import { AdminAuthProvider } from "./context/AdminAuthContext";
+import { AdminProvider } from "./context/AdminContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HashRouter>
-      <AdminAuthProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </AdminAuthProvider>
+      <AdminProvider>
+        <App />
+      </AdminProvider>
     </HashRouter>
   </React.StrictMode>
 );

@@ -3,23 +3,23 @@ import { createContext, useContext, useState } from "react";
 const AdminAuthContext = createContext(null);
 
 export function AdminAuthProvider({ children }) {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [admin, setAdmin] = useState(null);
 
   const login = (username, password) => {
-    // TEMP SIMPLE LOGIN (replace later)
+    // TEMP SIMPLE LOGIN (can secure later)
     if (username === "admin" && password === "admin123") {
-      setIsAdmin(true);
+      setAdmin({ username });
       return true;
     }
     return false;
   };
 
   const logout = () => {
-    setIsAdmin(false);
+    setAdmin(null);
   };
 
   return (
-    <AdminAuthContext.Provider value={{ isAdmin, login, logout }}>
+    <AdminAuthContext.Provider value={{ admin, login, logout }}>
       {children}
     </AdminAuthContext.Provider>
   );
