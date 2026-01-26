@@ -1,11 +1,11 @@
 const CATEGORIES = [
-  { id: "combos", label: "Combos" },
-  { id: "grocery", label: "Grocery" },
-  { id: "sweets", label: "Sweets and Savours" },
-  { id: "spices", label: "Spices and Millets" },
-  { id: "dryfruits", label: "Dry Fruits" },
-  { id: "organic", label: "Organic" },
-  { id: "gifting", label: "Gifting" },
+  { id: "combos", label: "Combos", icon: "combos.png" },
+  { id: "grocery", label: "Grocery", icon: "grocery.png" },
+  { id: "sweets", label: "Sweets and Savours", icon: "sweets.png" },
+  { id: "spices", label: "Spices and Millets", icon: "spices.png" },
+  { id: "dryfruits", label: "Dry Fruits", icon: "dryfruits.png" }, // 🔥 FIX
+  { id: "organic", label: "Organic", icon: "organic.png" },
+  { id: "gifting", label: "Gifting", icon: "gifting.png" },
 ];
 
 const BASE_URL = import.meta.env.BASE_URL;
@@ -17,7 +17,7 @@ export default function CategoryIcons() {
         <div key={cat.id} className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full bg-white shadow flex items-center justify-center">
             <img
-              src={`${BASE_URL}icons/${cat.id}.png`}
+              src={`${BASE_URL}icons/${cat.icon}`}
               alt={cat.label}
               className="w-12 h-12 object-contain"
               loading="lazy"
