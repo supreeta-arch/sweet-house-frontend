@@ -8,7 +8,7 @@ const CATEGORIES = [
   { id: "gifting", label: "Gifting" },
 ];
 
-const BASE_PATH = "/sweet-house-frontend/";
+const BASE_URL = import.meta.env.BASE_URL;
 
 export default function CategoryIcons() {
   return (
@@ -17,7 +17,7 @@ export default function CategoryIcons() {
         <div key={cat.id} className="flex flex-col items-center">
           <div className="w-24 h-24 rounded-full bg-white shadow flex items-center justify-center">
             <img
-              src={`${BASE_PATH}icons/${cat.id}.png`}
+              src={`${BASE_URL}icons/${cat.id}.png`}
               alt={cat.label}
               className="w-12 h-12 object-contain"
               loading="lazy"
