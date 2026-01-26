@@ -1,12 +1,12 @@
 export default function CategoryIcons({ type, active = false }) {
   const icons = {
-    combos: "<img src={`${import.meta.env.BASE_URL}icons/grocery.png`} />",
-    grocery: "<img src={`${import.meta.env.BASE_URL}icons/grocery.png`} />",
-    sweets: "<img src={`${import.meta.env.BASE_URL}icons/sweets.png`} />",
-    spices: "<img src={`${import.meta.env.BASE_URL}icons/spices.png`} />",
-    dryfruits: "<img src={`${import.meta.env.BASE_URL}icons/dryfruits.png`} />",
-    organic: "<img src={`${import.meta.env.BASE_URL}icons/organic.png`} />",
-    gifting: "<img src={`${import.meta.env.BASE_URL}icons/gifting.png`} />",
+    combos: `${import.meta.env.BASE_URL}icons/combos.png`,
+    grocery: `${import.meta.env.BASE_URL}icons/grocery.png`,
+    sweets: `${import.meta.env.BASE_URL}icons/sweets.png`,
+    spices: `${import.meta.env.BASE_URL}icons/spices.png`,
+    dryfruits: `${import.meta.env.BASE_URL}icons/dryfruits.png`,
+    organic: `${import.meta.env.BASE_URL}icons/organic.png`,
+    gifting: `${import.meta.env.BASE_URL}icons/gifting.png`,
   };
 
   return (
