@@ -7,7 +7,10 @@ const categories = [
   { name: "Grocery", slug: "grocery", img: "grocery.png" },
   { name: "Sweets and Savours", slug: "sweets", img: "sweets.png" },
   { name: "Spices and Millets", slug: "spices", img: "spices.png" },
+
+  // 🔥 IMPORTANT — NO DASH
   { name: "Dry Fruits", slug: "dry-fruits", img: "dryfruits.png" },
+
   { name: "Organic", slug: "organic", img: "organic.png" },
   { name: "Gifting", slug: "gifting", img: "gifting.png" },
 ];
