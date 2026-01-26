@@ -9,9 +9,8 @@ export default function AdminLogin() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    const success = login(password);
-    if (success) {
-      navigate("/admin/dashboard/products");
+    if (login(password)) {
+      navigate("/admin/dashboard");
     } else {
       setError("Invalid password");
     }
@@ -38,7 +37,7 @@ export default function AdminLogin() {
 
         <button
           onClick={handleLogin}
-          className="w-full bg-purple-600 text-white py-3 rounded font-semibold"
+          className="w-full bg-primary text-white py-3 rounded font-semibold"
         >
           Login
         </button>

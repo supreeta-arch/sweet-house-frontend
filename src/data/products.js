@@ -1,31 +1,224 @@
-// src/data/products.js
-import defaultProducts from "./defaultProducts";
+// src/data/defaultProducts.js
 
-const STORAGE_KEY = "adminProducts";
+const defaultProducts = [
+  /* ---------------- SWEETS & SAVOURS ---------------- */
 
-/* Normalize old categories safely */
-const normalizeCategory = (slug) => {
-  const map = {
-    sweets: "sweets-savours",
-    mixture: "sweets-savours",
-    chips: "sweets-savours",
-  };
-  return map[slug] || slug;
-};
+  {
+    id: 1,
+    name: "Kovil Patti Special Chikki",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["Groundnuts", "Jaggery"],
+  },
+  {
+    id: 2,
+    name: "Chikki Round",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["Groundnuts", "Jaggery"],
+  },
+  {
+    id: 3,
+    name: "Black Thill Ball",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["Black Sesame Seeds", "Jaggery"],
+  },
+  {
+    id: 4,
+    name: "White Thill Ball",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["White Sesame Seeds", "Jaggery"],
+  },
+  {
+    id: 5,
+    name: "Roasted Gram Round",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["Roasted Gram", "Jaggery"],
+  },
+  {
+    id: 6,
+    name: "Mysore Pak",
+    category: "sweets-savours",
+    price: 180,
+    weight: "200g",
+    rating: 4.3,
+    inStock: true,
+    ingredients: ["Besan", "Ghee", "Sugar"],
+  },
+  {
+    id: 7,
+    name: "Milk Kova",
+    category: "sweets-savours",
+    price: 180,
+    weight: "200g",
+    rating: 4.3,
+    inStock: true,
+    ingredients: ["Milk Solids", "Sugar"],
+  },
+  {
+    id: 8,
+    name: "Lava Lattu",
+    category: "sweets-savours",
+    price: 180,
+    weight: "200g",
+    rating: 4.3,
+    inStock: true,
+    ingredients: ["Besan", "Sugar", "Ghee", "Cocoa", "Milk Solids"],
+  },
+  {
+    id: 9,
+    name: "Thirunelveli Alva",
+    category: "sweets-savours",
+    price: 180,
+    weight: "200g",
+    rating: 4.3,
+    inStock: true,
+    ingredients: ["Wheat Milk", "Sugar", "Ghee", "Cashew"],
+  },
+  {
+    id: 10,
+    name: "Kamarkattu Lattu",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["Rice Flour", "Jaggery", "Coconut", "Dry Ginger", "Cumin"],
+  },
+  {
+    id: 11,
+    name: "Adhirasam",
+    category: "sweets-savours",
+    price: 180,
+    weight: "200g",
+    rating: 4.3,
+    inStock: true,
+    ingredients: ["Rice Flour", "Jaggery", "Sesame Seeds", "Ghee", "Cardamom"],
+  },
 
-export const getProducts = () => {
-  try {
-    const adminRaw =
-      JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  /* ---------------- MIXTURES ---------------- */
 
-    const adminProducts = adminRaw.map((p) => ({
-      ...p,
-      category: normalizeCategory(p.category),
-    }));
+  {
+    id: 12,
+    name: "Special Mixture",
+    category: "sweets-savours",
+    price: 150,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Besan", "Rice Flour", "Groundnuts", "Spices"],
+  },
+  {
+    id: 13,
+    name: "Madras Mixture",
+    category: "sweets-savours",
+    price: 150,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Besan", "Rice Flour", "Groundnuts", "Spices"],
+  },
+  {
+    id: 14,
+    name: "Garlic Mixture",
+    category: "sweets-savours",
+    price: 150,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Garlic", "Besan", "Rice Flour", "Spices"],
+  },
+  {
+    id: 15,
+    name: "Kara Boondi",
+    category: "sweets-savours",
+    price: 140,
+    weight: "200g",
+    rating: 4.0,
+    inStock: true,
+    ingredients: ["Besan", "Rice Flour", "Spices"],
+  },
+  {
+    id: 16,
+    name: "Millets Mixture",
+    category: "sweets-savours",
+    price: 160,
+    weight: "200g",
+    rating: 4.2,
+    inStock: true,
+    ingredients: ["Millets", "Besan", "Groundnuts", "Spices"],
+  },
 
-    return [...adminProducts, ...defaultProducts];
-  } catch (e) {
-    console.error("Failed to load products", e);
-    return defaultProducts;
-  }
-};
+  /* ---------------- CHIPS ---------------- */
+
+  {
+    id: 27,
+    name: "Banana Chips Plain",
+    category: "sweets-savours",
+    price: 140,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Raw Banana", "Coconut Oil"],
+  },
+  {
+    id: 28,
+    name: "Banana Chips Salt",
+    category: "sweets-savours",
+    price: 140,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Raw Banana", "Coconut Oil", "Salt"],
+  },
+  {
+    id: 29,
+    name: "Banana Chips Pepper",
+    category: "sweets-savours",
+    price: 140,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Raw Banana", "Coconut Oil", "Pepper"],
+  },
+  {
+    id: 30,
+    name: "Potato Pudina",
+    category: "sweets-savours",
+    price: 140,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Potato", "Mint", "Spices"],
+  },
+  {
+    id: 31,
+    name: "Bitter Gourd Chips",
+    category: "sweets-savours",
+    price: 140,
+    weight: "200g",
+    rating: 4.1,
+    inStock: true,
+    ingredients: ["Bitter Gourd", "Salt"],
+  },
+];
+
+export default defaultProducts;

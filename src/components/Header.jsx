@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Search, Heart, ShoppingCart, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
-import { getProducts } from "../data/products";
+import products from "../data/products";
 
 /* ---------------- SHOP ALL CONFIG ---------------- */
 
@@ -20,7 +20,6 @@ const SHOP_ALL_CATEGORIES = [
 
 function ShopAllMegaMenu({ closeMenu }) {
   const navigate = useNavigate();
-  const products = getProducts();
 
   return (
     <div
@@ -29,24 +28,28 @@ function ShopAllMegaMenu({ closeMenu }) {
     >
       <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-5 gap-10">
         {SHOP_ALL_CATEGORIES.map((cat) => {
-          const items = products.filter(
-            (p) => p.category === cat.slug
-          );
+          const items = products.filter((p) => p.category === cat.slug);
 
           return (
-            <div key={cat.slug} className="min-h-[220px]">
-              <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase">
+            <div key={cat.slug} className="min-h-[240px]">
+              <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase tracking-wide">
                 {cat.title}
               </h4>
 
-              {cat.status !== "active" && (
+              {cat.status === "na" && (
                 <p className="text-sm text-gray-400 italic">
-                  {cat.status === "na" ? "Not available" : "Coming soon"}
+                  Not available
+                </p>
+              )}
+
+              {cat.status === "coming-soon" && (
+                <p className="text-sm text-gray-400 italic">
+                  Coming soon
                 </p>
               )}
 
               {cat.status === "active" && (
-                <ul className="space-y-2">
+                <ul className="space-y-2 max-h-[280px] overflow-y-auto pr-2">
                   {items.map((item) => (
                     <li key={item.id}>
                       <button
@@ -54,7 +57,7 @@ function ShopAllMegaMenu({ closeMenu }) {
                           navigate(`/product/${item.id}`);
                           closeMenu();
                         }}
-                        className="text-sm text-gray-700 hover:text-purple-700"
+                        className="text-left text-sm text-gray-700 hover:text-purple-700 hover:underline leading-snug"
                       >
                         {item.name}
                       </button>
@@ -86,9 +89,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
 
-  const cartContext = useCart();
-  const cart = cartContext?.cart || [];
-
+  const { cart = [] } = useCart();
   const cartCount = cart.reduce(
     (sum, item) => sum + (item.quantity || 0),
     0
@@ -100,7 +101,7 @@ export default function Header() {
   };
 
   const baseNav =
-    "relative pb-2 font-semibold text-black hover:text-purple-700";
+    "relative pb-2 font-semibold text-black hover:text-primary";
 
   return (
     <header className="w-full bg-white border-b sticky top-0 z-50">
@@ -119,18 +120,23 @@ export default function Header() {
           <Menu />
         </button>
 
-        <div className="mx-auto">
+        {/* EXTRA-LARGE, PREMIUM LOGO */}
+        <div className="mx-auto flex items-center justify-center">
           <img
-            src={`${import.meta.env.BASE_URL}logo.png`}
+            src="/logo.png"
             alt="Sweet House"
-            className="h-24 md:h-28 w-auto"
+            className="
+              h-24 md:h-28   /* ⬅️ increased again */
+              w-auto
+              transition-transform duration-300
+              hover:scale-105
+            "
           />
         </div>
 
         <div className="absolute right-6 flex items-center gap-5">
           <Heart className="text-red-500 cursor-pointer" />
-
-          <NavLink to="/cart" className="relative">
+          <NavLink to="/cart" className="relative" onClick={closeAllMenus}>
             <ShoppingCart />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
@@ -146,8 +152,8 @@ export default function Header() {
         className="hidden lg:block border-t relative"
         onMouseLeave={closeAllMenus}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-center gap-10">
-          <NavLink to="/" className={baseNav}>
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-center items-center gap-10">
+          <NavLink to="/" className={baseNav} onClick={closeAllMenus}>
             SWEET HOUSE
           </NavLink>
 
@@ -158,15 +164,26 @@ export default function Header() {
             Shop All ▾
           </span>
 
-          <NavLink to="/category/sweets-savours" className={baseNav}>
+          <NavLink
+            to="/category/sweets-savours"
+            className={baseNav}
+            onClick={closeAllMenus}
+          >
             SWEETS AND SAVOURS
           </NavLink>
 
-          <NavLink to="/about" className={baseNav}>
+          <NavLink
+            to="/about"
+            className={baseNav}
+            onClick={closeAllMenus}
+          >
             ABOUT
           </NavLink>
 
-          <div className="ml-6 bg-purple-700 text-white p-3 rounded-md">
+          <div
+            className="ml-6 bg-primary text-white p-3 rounded-md cursor-pointer"
+            onClick={closeAllMenus}
+          >
             <Search />
           </div>
         </div>
@@ -180,11 +197,7 @@ export default function Header() {
       {mobileOpen && (
         <div className="fixed inset-0 bg-white z-[9999] p-6 lg:hidden">
           <div className="flex justify-between mb-6">
-            <img
-              src={`${import.meta.env.BASE_URL}logo.png`}
-              className="h-20"
-              alt="logo"
-            />
+            <img src="/logo.png" className="h-20" />
             <X onClick={closeAllMenus} />
           </div>
         </div>

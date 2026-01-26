@@ -1,21 +1,18 @@
 import { useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
-import { getProducts } from "../data/products";
-import categories from "../data/categories";
+import products from "../data/products";
 
 export default function Category() {
   const { name } = useParams();
-  const products = getProducts();
 
-  const category = categories.find((c) => c.slug === name);
   const categoryProducts = products.filter(
     (p) => p.category === name
   );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold text-purple-700 mb-8">
-        {category?.name || "Category"}
+      <h1 className="text-3xl font-bold text-purple-700 mb-8 capitalize">
+        {name.replace("-", " ")}
       </h1>
 
       {categoryProducts.length === 0 ? (

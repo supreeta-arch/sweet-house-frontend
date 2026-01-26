@@ -1,21 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
 import App from "./App";
-
+import { BrowserRouter } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
-import { AdminProvider } from "./context/AdminContext";
-
 import "./index.css";
+import { AdminProvider } from "./context/AdminContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <CartProvider>
         <AdminProvider>
-          <App />
+        <App />
         </AdminProvider>
       </CartProvider>
-    </HashRouter>
+    </BrowserRouter>
   </React.StrictMode>
 );
+

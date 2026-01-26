@@ -1,23 +1,45 @@
 import Banner from "../components/Banner";
 import ProductSection from "../components/ProductSection";
 import Footer from "../components/Footer";
-import { getProducts } from "../data/products";
-import categories from "../data/categories";
+import products from "../data/products";
 import { Link } from "react-router-dom";
 
-export default function Home() {
-  const products = getProducts();
 
+/**
+ * ✅ ONLY VALID CATEGORIES (NEW STRUCTURE)
+ */
+const categories = [
+  { name: "Combos", icon: "/icons/combos.png", slug: "combos" },
+  { name: "Grocery", icon: "/icons/grocery.png", slug: "grocery" },
+  {
+    name: "Sweets and Savours",
+    icon: "/icons/sweets.png",
+    slug: "sweets-savours",
+  },
+  {
+    name: "Spices and Millets",
+    icon: "/icons/spices.png",
+    slug: "spices-millets",
+  },
+  { name: "Dry Fruits", icon: "/icons/dry-fruits.png", slug: "dry-fruits" },
+  { name: "Organic", icon: "/icons/organic.png", slug: "organic" },
+  { name: "Gifting", icon: "/icons/gifting.png", slug: "gifting" },
+];
+
+export default function Home() {
+  /**
+   * ✅ Show only SWEETS & SAVOURS products on home
+   */
   const sweetsAndSavours = products.filter(
     (p) => p.category === "sweets-savours"
   );
 
   return (
     <>
-      {/* Banner */}
+      {/* ================= Banner ================= */}
       <Banner />
 
-      {/* Category Tiles */}
+      {/* ================= Category Tiles ================= */}
       <section className="bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-6 place-items-center">
@@ -29,7 +51,7 @@ export default function Home() {
               >
                 <div className="w-28 h-36 bg-white rounded-full flex items-center justify-center shadow-md group-hover:shadow-xl transition">
                   <img
-                    src={`/icons/${cat.slug}.png`}
+                    src={cat.icon}
                     alt={cat.name}
                     className="w-14 h-14 object-contain"
                   />
@@ -43,7 +65,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Product Sections */}
+      {/* ================= Product Sections ================= */}
       <ProductSection
         title="JUST ARRIVED"
         products={sweetsAndSavours.slice(0, 8)}
@@ -54,6 +76,7 @@ export default function Home() {
         products={sweetsAndSavours.slice(8, 16)}
       />
 
+      {/* ================= Footer ================= */}
       <Footer />
     </>
   );

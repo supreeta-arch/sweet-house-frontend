@@ -1,45 +1,66 @@
 import { Routes, Route } from "react-router-dom";
 
+/* Storefront */
 import Header from "./components/Header";
-import Footer from "./components/Footer";
-
-// Public pages
 import Home from "./pages/Home";
-import ShopAll from "./pages/ShopAll";
+import Cart from "./pages/Cart";
 import Category from "./pages/Category";
-import CartPage from "./pages/CartPage";
+import ShopAll from "./pages/ShopAll";
+import About from "./pages/About";
+import Checkout from "./pages/Checkout";
+import ProductDetails from "./pages/ProductDetails";
+import OrderSuccess from "./pages/OrderSuccess";
+import WhatsAppChat from "./components/WhatsAppChat";
 
-// Admin
+/* Admin */
 import AdminLogin from "./pages/admin/AdminLogin";
-import AdminProducts from "./pages/admin/AdminProducts";
-import AdminRoute from "./routes/AdminRoute";
+import Dashboard from "./pages/admin/Dashboard";
+import Products from "./pages/admin/Products";
+import Orders from "./pages/admin/Orders";
+import ProtectedAdmin from "./components/admin/ProtectedAdmin";
+import AdminLayout from "./components/admin/AdminLayout";
+
 
 export default function App() {
   return (
     <>
+      {/* Storefront Header */}
       <Header />
 
       <Routes>
-        {/* PUBLIC ROUTES */}
+        {/* -------- STORE ROUTES -------- */}
         <Route path="/" element={<Home />} />
-        <Route path="/shop-all" element={<ShopAll />} />
-        <Route path="/category/:slug" element={<Category />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/shop" element={<ShopAll />} />
+        <Route path="/category/:name" element={<Category />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/about" element={<About />} />
 
-        {/* ADMIN ROUTES */}
+       
+
+
+        {/* -------- ADMIN LOGIN -------- */}
         <Route path="/admin" element={<AdminLogin />} />
 
+        {/* -------- ADMIN PROTECTED -------- */}
         <Route
-          path="/admin/products"
+          path="/admin"
           element={
-            <AdminRoute>
-              <AdminProducts />
-            </AdminRoute>
+            <ProtectedAdmin>
+              <AdminLayout />
+            </ProtectedAdmin>
           }
-        />
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="products" element={<Products />} />
+          <Route path="orders" element={<Orders />} />
+        </Route>
       </Routes>
 
-      <Footer />
+      {/* WhatsApp floating button */}
+      <WhatsAppChat />
     </>
   );
 }

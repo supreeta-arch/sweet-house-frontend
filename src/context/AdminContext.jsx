@@ -1,24 +1,24 @@
 import { createContext, useContext, useState } from "react";
 
-const AdminContext = createContext(null);
+const AdminContext = createContext();
 
-export function AdminProvider({ children }) {
+export const AdminProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(
     localStorage.getItem("isAdmin") === "true"
   );
 
   const login = (password) => {
     if (password === "admin123") {
-      setIsAdmin(true);
       localStorage.setItem("isAdmin", "true");
+      setIsAdmin(true);
       return true;
     }
     return false;
   };
 
   const logout = () => {
-    setIsAdmin(false);
     localStorage.removeItem("isAdmin");
+    setIsAdmin(false);
   };
 
   return (
@@ -26,12 +26,6 @@ export function AdminProvider({ children }) {
       {children}
     </AdminContext.Provider>
   );
-}
+};
 
-export function useAdmin() {
-  const context = useContext(AdminContext);
-  if (!context) {
-    throw new Error("useAdmin must be used inside AdminProvider");
-  }
-  return context;
-}
+export const useAdmin = () => useContext(AdminContext);

@@ -3,19 +3,24 @@ import { createContext, useContext, useEffect, useState } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
+  // ✅ Load cart from localStorage on first load
   const [cart, setCart] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("cart")) || [];
-    } catch {
+      const stored = localStorage.getItem("sweet-house-cart");
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
       return [];
     }
   });
 
-  /* ---------------- ADD TO CART ---------------- */
+  // ✅ Persist cart to localStorage on every change
+  useEffect(() => {
+    localStorage.setItem("sweet-house-cart", JSON.stringify(cart));
+  }, [cart]);
+
   const addToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
-
       if (existing) {
         return prev.map((item) =>
           item.id === product.id
@@ -23,15 +28,12 @@ export function CartProvider({ children }) {
             : item
         );
       }
-
       return [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  /* ---------------- UPDATE QUANTITY ---------------- */
   const updateQty = (id, quantity) => {
     if (quantity < 1) return;
-
     setCart((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity } : item
@@ -39,18 +41,14 @@ export function CartProvider({ children }) {
     );
   };
 
-  /* ---------------- REMOVE ITEM ---------------- */
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  /* ---------------- CLEAR CART ---------------- */
-  const clearCart = () => setCart([]);
-
-  /* ---------------- PERSIST ---------------- */
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("sweet-house-cart");
+  };
 
   return (
     <CartContext.Provider
@@ -67,7 +65,6 @@ export function CartProvider({ children }) {
   );
 }
 
-/* ---------------- HOOK ---------------- */
 export const useCart = () => {
   const ctx = useContext(CartContext);
   if (!ctx) {
