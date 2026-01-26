@@ -7,34 +7,29 @@ const categories = [
   { name: "Grocery", slug: "grocery", img: "grocery.png" },
   { name: "Sweets and Savours", slug: "sweets", img: "sweets.png" },
   { name: "Spices and Millets", slug: "spices", img: "spices.png" },
-
-  // 🔥 IMPORTANT — NO DASH
   { name: "Dry Fruits", slug: "dry-fruits", img: "dryfruits.png" },
-
   { name: "Organic", slug: "organic", img: "organic.png" },
   { name: "Gifting", slug: "gifting", img: "gifting.png" },
 ];
 
 export default function CategoryIcons() {
   return (
-    <section className="py-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6">
+    <section className="py-10">
+      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {categories.map((cat) => (
           <Link
             key={cat.slug}
             to={`/category/${cat.slug}`}
-            className="flex flex-col items-center gap-3"
+            className="text-center"
           >
-            <div className="w-28 h-36 rounded-full bg-white shadow flex items-center justify-center">
+            <div className="w-32 h-40 mx-auto rounded-full bg-white shadow flex items-center justify-center">
               <img
                 src={`${BASE}icons/${cat.img}`}
                 alt={cat.name}
-                className="w-16 h-16 object-contain"
+                className="w-12 h-12 object-contain"
               />
             </div>
-            <span className="text-sm font-medium text-center">
-              {cat.name}
-            </span>
+            <p className="mt-3 font-medium">{cat.name}</p>
           </Link>
         ))}
       </div>
