@@ -3,7 +3,7 @@ const CATEGORIES = [
   { id: "grocery", label: "Grocery", icon: "grocery.png" },
   { id: "sweets", label: "Sweets and Savours", icon: "sweets.png" },
   { id: "spices", label: "Spices and Millets", icon: "spices.png" },
-  { id: "dryfruits", label: "Dry Fruits", icon: "dryfruits.png" }, // 🔥 FIX
+  { id: "dryfruits", label: "Dry Fruits", icon: "dryfruits.png" }, // ✅ exact filename
   { id: "organic", label: "Organic", icon: "organic.png" },
   { id: "gifting", label: "Gifting", icon: "gifting.png" },
 ];
