@@ -1,33 +1,40 @@
-const CATEGORIES = [
-  { id: "combos", label: "Combos", icon: "combos.png" },
-  { id: "grocery", label: "Grocery", icon: "grocery.png" },
-  { id: "sweets", label: "Sweets and Savours", icon: "sweets.png" },
-  { id: "spices", label: "Spices and Millets", icon: "spices.png" },
-  { id: "dryfruits", label: "Dry Fruits", icon: "dryfruits.png" }, // ✅ exact filename
-  { id: "organic", label: "Organic", icon: "organic.png" },
-  { id: "gifting", label: "Gifting", icon: "gifting.png" },
-];
+import { Link } from "react-router-dom";
 
-const BASE_URL = import.meta.env.BASE_URL;
+const BASE = import.meta.env.BASE_URL;
+
+const categories = [
+  { name: "Combos", slug: "combos", img: "combos.png" },
+  { name: "Grocery", slug: "grocery", img: "grocery.png" },
+  { name: "Sweets and Savours", slug: "sweets", img: "sweets.png" },
+  { name: "Spices and Millets", slug: "spices", img: "spices.png" },
+  { name: "Dry Fruits", slug: "dry-fruits", img: "dryfruits.png" },
+  { name: "Organic", slug: "organic", img: "organic.png" },
+  { name: "Gifting", slug: "gifting", img: "gifting.png" },
+];
 
 export default function CategoryIcons() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8">
-      {CATEGORIES.map((cat) => (
-        <div key={cat.id} className="flex flex-col items-center">
-          <div className="w-24 h-24 rounded-full bg-white shadow flex items-center justify-center">
-            <img
-              src={`${BASE_URL}icons/${cat.icon}`}
-              alt={cat.label}
-              className="w-12 h-12 object-contain"
-              loading="lazy"
-            />
-          </div>
-          <p className="mt-3 text-sm font-semibold text-center">
-            {cat.label}
-          </p>
-        </div>
-      ))}
-    </div>
+    <section className="py-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6">
+        {categories.map((cat) => (
+          <Link
+            key={cat.slug}
+            to={`/category/${cat.slug}`}
+            className="flex flex-col items-center gap-3"
+          >
+            <div className="w-28 h-36 rounded-full bg-white shadow flex items-center justify-center">
+              <img
+                src={`${BASE}icons/${cat.img}`}
+                alt={cat.name}
+                className="w-16 h-16 object-contain"
+              />
+            </div>
+            <span className="text-sm font-medium text-center">
+              {cat.name}
+            </span>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
