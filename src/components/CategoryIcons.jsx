@@ -1,13 +1,13 @@
 export default function CategoryIcons({ type, active = false }) {
   const icons = {
-    chips: "/icons/chips.png",
-    combos: "/icons/combos.png",
-    grocery: "/icons/grocery.png",
-    sweets: "/icons/sweets.png",
-    spices: "/icons/spices.png",
-    dryfruits: "/icons/dryfruits.png",
-    organic: "/icons/organic.png",
-    gifting: "/icons/gifting.png",
+    chips: "/icons/chips",
+    combos: "/icons/combos",
+    grocery: "/icons/grocery",
+    sweets: "/icons/sweets",
+    spices: "/icons/spices",
+    dryfruits: "/icons/dryfruits",
+    organic: "/icons/organic",
+    gifting: "/icons/gifting",
   };
 
   const src = icons[type];
@@ -18,6 +18,7 @@ export default function CategoryIcons({ type, active = false }) {
     <img
       src={src}
       alt={type}
+      loading="lazy"
       className={`
         w-14 h-14 object-contain
         transition-all duration-300
