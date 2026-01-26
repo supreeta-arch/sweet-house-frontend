@@ -1,33 +1,27 @@
-export default function CategoryIcons({ type, active = false }) {
+const BASE = import.meta.env.BASE_URL;
+
+export default function CategoryIcons({ type }) {
   const icons = {
-    chips: "/icons/chips",
-    combos: "/icons/combos",
-    grocery: "/icons/grocery",
-    sweets: "/icons/sweets",
-    spices: "/icons/spices",
-    dryfruits: "/icons/dryfruits",
-    organic: "/icons/organic",
-    gifting: "/icons/gifting",
+    combos: "icons/combos",
+    grocery: "icons/grocery",
+    sweets: "icons/sweets",
+    spices: "icons/spices",
+    dryfruits: "icons/dryfruits",
+    organic: "icons/organic",
+    gifting: "icons/gifting",
+    chips: "icons/chips",
   };
 
-  const src = icons[type];
+  const iconPath = icons[type];
 
-  if (!src) return null;
+  if (!iconPath) return null;
 
   return (
     <img
-      src={src}
+      src={`${BASE}${iconPath}`}
       alt={type}
       loading="lazy"
-      className={`
-        w-14 h-14 object-contain
-        transition-all duration-300
-        ${
-          active
-            ? "brightness-110 saturate-150"
-            : "group-hover:brightness-110 group-hover:saturate-150"
-        }
-      `}
+      className="w-14 h-14 object-contain"
     />
   );
 }
