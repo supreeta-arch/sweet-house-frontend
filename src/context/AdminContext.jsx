@@ -29,9 +29,9 @@ export function AdminProvider({ children }) {
 }
 
 export function useAdmin() {
-  const ctx = useContext(AdminContext);
-  if (!ctx) {
+  const context = useContext(AdminContext);
+  if (!context) {
     throw new Error("useAdmin must be used inside AdminProvider");
   }
-  return ctx;
+  return context;
 }
