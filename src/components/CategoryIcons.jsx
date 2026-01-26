@@ -5,29 +5,31 @@ const ICONS = {
   grocery: "icons/grocery.png",
   sweets: "icons/sweets.png",
   spices: "icons/spices.png",
-  dryfruits: "icons/dryfruits.png",
+  dryfruits: "icons/dryfruits.png", // ✅ exact filename
   organic: "icons/organic.png",
   gifting: "icons/gifting.png",
   chips: "icons/chips.png",
 };
 
 export default function CategoryIcons({ type, label }) {
-  const src = ICONS[type];
+  const iconPath = ICONS[type];
 
-  if (!src) {
-    console.warn("Missing icon for:", type);
+  if (!iconPath) {
+    console.warn("Missing category icon for:", type);
     return null;
   }
 
   return (
     <div className="flex flex-col items-center">
       <img
-        src={`${BASE}${src}`}
+        src={`${BASE}${iconPath}`}
         alt={label || type}
         className="w-16 h-16 object-contain mb-2"
         loading="lazy"
       />
-      <span className="text-sm font-medium text-center">{label}</span>
+      <span className="text-sm font-medium text-center">
+        {label || type}
+      </span>
     </div>
   );
 }
