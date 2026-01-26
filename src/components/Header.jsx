@@ -123,7 +123,7 @@ export default function Header() {
         {/* EXTRA-LARGE, PREMIUM LOGO */}
         <div className="mx-auto flex items-center justify-center">
           <img
-            src="/logo.png"
+            src={`${import.meta.env.BASE_URL}logo.png`}
             alt="Sweet House"
             className="
               h-24 md:h-28   /* ⬅️ increased again */
