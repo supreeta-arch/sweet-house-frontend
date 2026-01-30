@@ -23,7 +23,9 @@ export default function ProductCard({ product }) {
     >
       {/* IMAGE */}
       <img
-        src={product.image}
+        src={product.image?.startsWith('/')
+          ? `${import.meta.env.BASE_URL}${product.image.slice(1)}`
+          : product.image}
         alt={product.name}
         className="h-40 w-full object-contain mb-4"
       />
