@@ -25,7 +25,9 @@ export default function ProductDetails() {
     <div className="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12">
       {/* IMAGE */}
       <img
-        src={product.image}
+        src={product.image?.startsWith('/')
+          ? `${import.meta.env.BASE_URL}${product.image.slice(1)}`
+          : product.image}
         alt={product.name}
         className="w-full h-96 object-contain"
       />
