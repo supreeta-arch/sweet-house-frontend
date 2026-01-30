@@ -21,7 +21,7 @@ const categories = [
     icon: "/icons/spices.png",
     slug: "spices-millets",
   },
-  { name: "Dry Fruits", icon: "/icons/dry-fruits.png", slug: "dry-fruits" },
+  { name: "Dry Fruits", icon: "/icons/dryfruits.png", slug: "dry-fruits" },
   { name: "Organic", icon: "/icons/organic.png", slug: "organic" },
   { name: "Gifting", icon: "/icons/gifting.png", slug: "gifting" },
 ];
@@ -51,7 +51,9 @@ export default function Home() {
               >
                 <div className="w-28 h-36 bg-white rounded-full flex items-center justify-center shadow-md group-hover:shadow-xl transition">
                   <img
-                    src={cat.icon}
+                    src={cat.icon?.startsWith('/')
+                      ? `${import.meta.env.BASE_URL}${cat.icon.slice(1)}`
+                      : cat.icon}
                     alt={cat.name}
                     className="w-14 h-14 object-contain"
                   />
