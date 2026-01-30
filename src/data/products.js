@@ -12,6 +12,7 @@ const defaultProducts = [
     rating: 4.2,
     inStock: true,
     ingredients: ["Groundnuts", "Jaggery"],
+    image: "/sweets.png",
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const defaultProducts = [
     rating: 4.2,
     inStock: true,
     ingredients: ["Groundnuts", "Jaggery"],
+    image: "/sweets.png",
   },
   {
     id: 3,
@@ -32,6 +34,7 @@ const defaultProducts = [
     rating: 4.2,
     inStock: true,
     ingredients: ["Black Sesame Seeds", "Jaggery"],
+    image: "/ladoo.png",
   },
   {
     id: 4,
@@ -41,7 +44,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.2,
     inStock: true,
+    inStock: true,
     ingredients: ["White Sesame Seeds", "Jaggery"],
+    image: "/ladoo.png",
   },
   {
     id: 5,
@@ -51,7 +56,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.2,
     inStock: true,
+    inStock: true,
     ingredients: ["Roasted Gram", "Jaggery"],
+    image: "/ladoo.png",
   },
   {
     id: 6,
@@ -61,7 +68,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.3,
     inStock: true,
+    inStock: true,
     ingredients: ["Besan", "Ghee", "Sugar"],
+    image: "/mysore-pak.png",
   },
   {
     id: 7,
@@ -71,7 +80,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.3,
     inStock: true,
+    inStock: true,
     ingredients: ["Milk Solids", "Sugar"],
+    image: "/sweets.png",
   },
   {
     id: 8,
@@ -81,7 +92,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.3,
     inStock: true,
+    inStock: true,
     ingredients: ["Besan", "Sugar", "Ghee", "Cocoa", "Milk Solids"],
+    image: "/ladoo.png",
   },
   {
     id: 9,
@@ -91,7 +104,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.3,
     inStock: true,
+    inStock: true,
     ingredients: ["Wheat Milk", "Sugar", "Ghee", "Cashew"],
+    image: "/sweets.png",
   },
   {
     id: 10,
@@ -101,7 +116,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.2,
     inStock: true,
+    inStock: true,
     ingredients: ["Rice Flour", "Jaggery", "Coconut", "Dry Ginger", "Cumin"],
+    image: "/ladoo.png",
   },
   {
     id: 11,
@@ -111,7 +128,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.3,
     inStock: true,
+    inStock: true,
     ingredients: ["Rice Flour", "Jaggery", "Sesame Seeds", "Ghee", "Cardamom"],
+    image: "/sweets.png",
   },
 
   /* ---------------- MIXTURES ---------------- */
@@ -125,6 +144,7 @@ const defaultProducts = [
     rating: 4.1,
     inStock: true,
     ingredients: ["Besan", "Rice Flour", "Groundnuts", "Spices"],
+    image: "/sweets.png",
   },
   {
     id: 13,
@@ -135,6 +155,7 @@ const defaultProducts = [
     rating: 4.1,
     inStock: true,
     ingredients: ["Besan", "Rice Flour", "Groundnuts", "Spices"],
+    image: "/sweets.png",
   },
   {
     id: 14,
@@ -144,7 +165,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.1,
     inStock: true,
+    inStock: true,
     ingredients: ["Garlic", "Besan", "Rice Flour", "Spices"],
+    image: "/sweets.png",
   },
   {
     id: 15,
@@ -154,7 +177,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.0,
     inStock: true,
+    inStock: true,
     ingredients: ["Besan", "Rice Flour", "Spices"],
+    image: "/sweets.png",
   },
   {
     id: 16,
@@ -164,7 +189,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.2,
     inStock: true,
+    inStock: true,
     ingredients: ["Millets", "Besan", "Groundnuts", "Spices"],
+    image: "/sweets.png",
   },
 
   /* ---------------- CHIPS ---------------- */
@@ -177,7 +204,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.1,
     inStock: true,
+    inStock: true,
     ingredients: ["Raw Banana", "Coconut Oil"],
+    image: "/chips.png",
   },
   {
     id: 28,
@@ -187,7 +216,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.1,
     inStock: true,
+    inStock: true,
     ingredients: ["Raw Banana", "Coconut Oil", "Salt"],
+    image: "/chips.png",
   },
   {
     id: 29,
@@ -197,7 +228,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.1,
     inStock: true,
+    inStock: true,
     ingredients: ["Raw Banana", "Coconut Oil", "Pepper"],
+    image: "/chips.png",
   },
   {
     id: 30,
@@ -207,7 +240,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.1,
     inStock: true,
+    inStock: true,
     ingredients: ["Potato", "Mint", "Spices"],
+    image: "/chips.png",
   },
   {
     id: 31,
@@ -217,7 +252,9 @@ const defaultProducts = [
     weight: "200g",
     rating: 4.1,
     inStock: true,
+    inStock: true,
     ingredients: ["Bitter Gourd", "Salt"],
+    image: "/chips.png",
   },
 ];
 
