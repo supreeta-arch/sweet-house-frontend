@@ -33,7 +33,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/20 text-center text-xs py-4 opacity-70">
-        © 2025 sweethouse.co.in — All rights reserved.
+        © 2026 sweethouse.co.in — All rights reserved.
       </div>
     </footer>
   );
