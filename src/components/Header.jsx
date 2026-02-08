@@ -80,7 +80,6 @@ export default function Header() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
 
-  /* SEARCH */
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -92,11 +91,13 @@ export default function Header() {
     0
   );
 
+  const trimmed = query.trim().toLowerCase();
+
   const results =
-    query.trim().length === 0
+    trimmed.length === 0
       ? []
       : products.filter((p) =>
-          p.name.toLowerCase().includes(query.toLowerCase())
+          p.name.toLowerCase().includes(trimmed)
         );
 
   const closeSearch = () => {
@@ -104,7 +105,7 @@ export default function Header() {
     setQuery("");
   };
 
-  /* ESC + ENTER */
+  /* Keyboard handling */
   useEffect(() => {
     function handleKey(e) {
       if (!showSearch) return;
@@ -225,7 +226,7 @@ export default function Header() {
         )}
       </nav>
 
-      {/* SEARCH OVERLAY (DESKTOP + MOBILE) */}
+      {/* SEARCH OVERLAY */}
       {showSearch && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center pt-24">
           <div
@@ -238,17 +239,18 @@ export default function Header() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search sweets, snacks..."
-                className="flex-1 border px-4 py-3 rounded-lg"
+                className="flex-1 border px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
               />
               <button onClick={closeSearch}>
                 <X />
               </button>
             </div>
 
-            {query && (
-              <div className="mt-4 max-h-72 overflow-y-auto">
+            {/* RESULTS – render ONLY when typing */}
+            {trimmed && (
+              <div className="mt-4 border-t pt-3 max-h-72 overflow-y-auto">
                 {results.length === 0 ? (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 text-center py-4">
                     No products found
                   </p>
                 ) : (
@@ -259,7 +261,7 @@ export default function Header() {
                         navigate(`/product/${p.id}`);
                         closeSearch();
                       }}
-                      className="w-full text-left px-3 py-2 rounded hover:bg-gray-100"
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition"
                     >
                       <div className="font-medium">{p.name}</div>
                       <div className="text-sm text-gray-500">
