@@ -83,8 +83,8 @@ export default function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
 
-  const searchBoxRef = useRef(null);
   const inputRef = useRef(null);
+  const searchRef = useRef(null);
 
   const cartCount = cart.reduce(
     (sum, item) => sum + (item.quantity || 0),
@@ -105,7 +105,12 @@ export default function Header() {
     setQuery("");
   };
 
-  /* Keyboard handling */
+  useEffect(() => {
+    if (showSearch && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [showSearch]);
+
   useEffect(() => {
     function handleKey(e) {
       if (!showSearch) return;
@@ -119,30 +124,6 @@ export default function Header() {
     return () =>
       window.removeEventListener("keydown", handleKey);
   }, [showSearch, results]);
-
-  /* Outside click */
-  useEffect(() => {
-    function handleClick(e) {
-      if (
-        searchBoxRef.current &&
-        !searchBoxRef.current.contains(e.target)
-      ) {
-        closeSearch();
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () =>
-      document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  useEffect(() => {
-    if (showSearch && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [showSearch]);
-
-  const baseNav =
-    "relative pb-2 font-semibold text-black hover:text-primary";
 
   return (
     <header className="w-full bg-white border-b sticky top-0 z-50">
@@ -196,27 +177,17 @@ export default function Header() {
         onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-center gap-10">
-          <NavLink to="/" className={baseNav}>
-            SWEET HOUSE
-          </NavLink>
-
+          <NavLink to="/">SWEET HOUSE</NavLink>
           <span
             onMouseEnter={() => setActiveMenu("shop")}
-            className={`${baseNav} cursor-pointer`}
+            className="cursor-pointer"
           >
             Shop All ▾
           </span>
-
-          <NavLink
-            to="/category/sweets-savours"
-            className={baseNav}
-          >
+          <NavLink to="/category/sweets-savours">
             SWEETS AND SAVOURS
           </NavLink>
-
-          <NavLink to="/about" className={baseNav}>
-            ABOUT
-          </NavLink>
+          <NavLink to="/about">ABOUT</NavLink>
         </div>
 
         {activeMenu === "shop" && (
@@ -226,14 +197,15 @@ export default function Header() {
         )}
       </nav>
 
-      {/* SEARCH OVERLAY */}
+      {/* 🔍 SEARCH OVERLAY – COMPACT FIRST */}
       {showSearch && (
         <div className="fixed inset-0 bg-black/40 z-50 flex justify-center pt-24">
           <div
-            ref={searchBoxRef}
-            className="bg-white w-full max-w-xl mx-4 rounded-xl shadow-xl p-5"
+            ref={searchRef}
+            className="w-full max-w-xl mx-4"
           >
-            <div className="flex items-center gap-3">
+            {/* Search bar only */}
+            <div className="bg-white rounded-xl shadow-xl p-4 flex items-center gap-3">
               <input
                 ref={inputRef}
                 value={query}
@@ -246,9 +218,9 @@ export default function Header() {
               </button>
             </div>
 
-            {/* RESULTS – render ONLY when typing */}
+            {/* Results appear ONLY when typing */}
             {trimmed && (
-              <div className="mt-4 border-t pt-3 max-h-72 overflow-y-auto">
+              <div className="mt-2 bg-white rounded-xl shadow-xl max-h-72 overflow-y-auto">
                 {results.length === 0 ? (
                   <p className="text-sm text-gray-500 text-center py-4">
                     No products found
@@ -261,7 +233,7 @@ export default function Header() {
                         navigate(`/product/${p.id}`);
                         closeSearch();
                       }}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 transition"
+                      className="w-full text-left px-4 py-3 hover:bg-gray-100"
                     >
                       <div className="font-medium">{p.name}</div>
                       <div className="text-sm text-gray-500">
