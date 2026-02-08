@@ -151,7 +151,7 @@ export default function Header() {
         </div>
 
         <div className="absolute right-6 flex items-center gap-5">
-          <Heart className="text-red-500 cursor-pointer" />
+          <Heart className="hidden lg:block text-red-500 cursor-pointer" />
 
           <NavLink to="/cart" className="relative">
             <ShoppingCart />
