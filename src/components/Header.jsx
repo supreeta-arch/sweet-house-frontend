@@ -28,22 +28,26 @@ function ShopAllMegaMenu({ closeMenu }) {
     >
       <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-5 gap-10">
         {SHOP_ALL_CATEGORIES.map((cat) => {
-          const items = products.filter((p) => p.category === cat.slug);
+          const items = products.filter(
+            (p) => p.category === cat.slug
+          );
 
           return (
-            <div key={cat.slug} className="min-h-[240px]">
-              <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase tracking-wide">
+            <div key={cat.slug}>
+              <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase">
                 {cat.title}
               </h4>
 
               {cat.status !== "active" && (
                 <p className="text-sm text-gray-400 italic">
-                  {cat.status === "na" ? "Not available" : "Coming soon"}
+                  {cat.status === "na"
+                    ? "Not available"
+                    : "Coming soon"}
                 </p>
               )}
 
               {cat.status === "active" && (
-                <ul className="space-y-2 max-h-[280px] overflow-y-auto pr-2">
+                <ul className="space-y-2">
                   {items.map((item) => (
                     <li key={item.id}>
                       <button
@@ -51,7 +55,7 @@ function ShopAllMegaMenu({ closeMenu }) {
                           navigate(`/product/${item.id}`);
                           closeMenu();
                         }}
-                        className="text-left text-sm text-gray-700 hover:text-purple-700 hover:underline"
+                        className="text-left text-sm hover:text-purple-700"
                       >
                         {item.name}
                       </button>
@@ -73,43 +77,68 @@ export default function Header() {
   const navigate = useNavigate();
   const { cart = [] } = useCart();
 
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
 
-  /* 🔍 SEARCH STATE */
+  /* SEARCH */
   const [showSearch, setShowSearch] = useState(false);
   const [query, setQuery] = useState("");
-  const searchRef = useRef(null);
+
+  const searchBoxRef = useRef(null);
+  const inputRef = useRef(null);
 
   const cartCount = cart.reduce(
     (sum, item) => sum + (item.quantity || 0),
     0
   );
 
-  const filteredProducts =
+  const results =
     query.trim().length === 0
       ? []
       : products.filter((p) =>
           p.name.toLowerCase().includes(query.toLowerCase())
         );
 
-  const closeAllMenus = () => {
-    setActiveMenu(null);
-    setMobileOpen(false);
+  const closeSearch = () => {
     setShowSearch(false);
     setQuery("");
   };
 
-  /* Close search on outside click */
+  /* ESC + ENTER */
+  useEffect(() => {
+    function handleKey(e) {
+      if (!showSearch) return;
+      if (e.key === "Escape") closeSearch();
+      if (e.key === "Enter" && results.length > 0) {
+        navigate(`/product/${results[0].id}`);
+        closeSearch();
+      }
+    }
+    window.addEventListener("keydown", handleKey);
+    return () =>
+      window.removeEventListener("keydown", handleKey);
+  }, [showSearch, results]);
+
+  /* Outside click */
   useEffect(() => {
     function handleClick(e) {
-      if (searchRef.current && !searchRef.current.contains(e.target)) {
-        setShowSearch(false);
+      if (
+        searchBoxRef.current &&
+        !searchBoxRef.current.contains(e.target)
+      ) {
+        closeSearch();
       }
     }
     document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    return () =>
+      document.removeEventListener("mousedown", handleClick);
   }, []);
+
+  useEffect(() => {
+    if (showSearch && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [showSearch]);
 
   const baseNav =
     "relative pb-2 font-semibold text-black hover:text-primary";
@@ -126,7 +155,7 @@ export default function Header() {
       <div className="relative max-w-7xl mx-auto px-6 py-3 flex items-center">
         <button
           className="lg:hidden absolute left-6"
-          onClick={() => setMobileOpen(true)}
+          onClick={() => setMobileMenu(true)}
         >
           <Menu />
         </button>
@@ -135,12 +164,13 @@ export default function Header() {
           <img
             src={`${import.meta.env.BASE_URL}logo.png`}
             alt="Sweet House"
-            className="h-24 md:h-28 w-auto hover:scale-105 transition"
+            className="h-24 md:h-28"
           />
         </div>
 
         <div className="absolute right-6 flex items-center gap-5">
           <Heart className="text-red-500 cursor-pointer" />
+
           <NavLink to="/cart" className="relative">
             <ShoppingCart />
             {cartCount > 0 && (
@@ -149,15 +179,22 @@ export default function Header() {
               </span>
             )}
           </NavLink>
+
+          <button
+            className="bg-primary text-white p-3 rounded-md"
+            onClick={() => setShowSearch(true)}
+          >
+            <Search />
+          </button>
         </div>
       </div>
 
-      {/* NAV BAR */}
+      {/* DESKTOP NAV */}
       <nav
         className="hidden lg:block border-t relative"
         onMouseLeave={() => setActiveMenu(null)}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-center items-center gap-10">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-center gap-10">
           <NavLink to="/" className={baseNav}>
             SWEET HOUSE
           </NavLink>
@@ -169,54 +206,58 @@ export default function Header() {
             Shop All ▾
           </span>
 
-          <NavLink to="/category/sweets-savours" className={baseNav}>
+          <NavLink
+            to="/category/sweets-savours"
+            className={baseNav}
+          >
             SWEETS AND SAVOURS
           </NavLink>
 
           <NavLink to="/about" className={baseNav}>
             ABOUT
           </NavLink>
-
-          <div
-            className="ml-6 bg-primary text-white p-3 rounded-md cursor-pointer"
-            onClick={() => setShowSearch((s) => !s)}
-          >
-            <Search />
-          </div>
         </div>
 
         {activeMenu === "shop" && (
-          <ShopAllMegaMenu closeMenu={() => setActiveMenu(null)} />
+          <ShopAllMegaMenu
+            closeMenu={() => setActiveMenu(null)}
+          />
         )}
+      </nav>
 
-        {/* 🔍 SEARCH DROPDOWN */}
-        {showSearch && (
+      {/* SEARCH OVERLAY (DESKTOP + MOBILE) */}
+      {showSearch && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex justify-center pt-24">
           <div
-            ref={searchRef}
-            className="absolute top-full left-1/2 -translate-x-1/2 w-[600px] bg-white shadow-xl border rounded-xl p-4 z-50"
+            ref={searchBoxRef}
+            className="bg-white w-full max-w-xl mx-4 rounded-xl shadow-xl p-5"
           >
-            <input
-              autoFocus
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search for sweets, snacks..."
-              className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
+            <div className="flex items-center gap-3">
+              <input
+                ref={inputRef}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search sweets, snacks..."
+                className="flex-1 border px-4 py-3 rounded-lg"
+              />
+              <button onClick={closeSearch}>
+                <X />
+              </button>
+            </div>
 
             {query && (
-              <div className="mt-4 max-h-64 overflow-y-auto">
-                {filteredProducts.length === 0 ? (
+              <div className="mt-4 max-h-72 overflow-y-auto">
+                {results.length === 0 ? (
                   <p className="text-sm text-gray-500">
                     No products found
                   </p>
                 ) : (
-                  filteredProducts.map((p) => (
+                  results.map((p) => (
                     <button
                       key={p.id}
                       onClick={() => {
                         navigate(`/product/${p.id}`);
-                        closeAllMenus();
+                        closeSearch();
                       }}
                       className="w-full text-left px-3 py-2 rounded hover:bg-gray-100"
                     >
@@ -230,8 +271,43 @@ export default function Header() {
               </div>
             )}
           </div>
-        )}
-      </nav>
+        </div>
+      )}
+
+      {/* MOBILE MENU */}
+      {mobileMenu && (
+        <div className="fixed inset-0 bg-black/40 z-50">
+          <div className="bg-white w-72 h-full p-5">
+            <button
+              className="mb-6"
+              onClick={() => setMobileMenu(false)}
+            >
+              <X />
+            </button>
+
+            <nav className="flex flex-col gap-4 font-semibold">
+              <NavLink
+                to="/"
+                onClick={() => setMobileMenu(false)}
+              >
+                SWEET HOUSE
+              </NavLink>
+              <NavLink
+                to="/category/sweets-savours"
+                onClick={() => setMobileMenu(false)}
+              >
+                SWEETS AND SAVOURS
+              </NavLink>
+              <NavLink
+                to="/about"
+                onClick={() => setMobileMenu(false)}
+              >
+                ABOUT
+              </NavLink>
+            </nav>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
