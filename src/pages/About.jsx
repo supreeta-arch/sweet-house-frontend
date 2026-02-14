@@ -5,7 +5,7 @@ export default function About() {
       <div className="bg-primary text-white py-20 text-center">
         <h1 className="text-4xl font-bold mb-4">About Sweet House</h1>
         <p className="max-w-2xl mx-auto text-lg">
-          A legacy of authentic taste, pure ingredients, and heartfelt traditions.
+          A legacy of authentic taste from india, pure ingredients, and heartfelt traditions.
         </p>
       </div>
 
