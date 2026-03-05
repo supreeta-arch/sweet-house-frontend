@@ -12,17 +12,13 @@ const ProductDetails = ({ addToCart }) => {
     return <div style={{ padding: "40px" }}>Product not found</div>;
   }
 
-  /* SUPPORT SINGLE OR MULTIPLE IMAGES */
-  const images = Array.isArray(product.image)
-    ? product.image
-    : [product.image];
+  const images = product.images || [product.image];
 
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
   return (
     <div className="product-details-container">
 
-      {/* IMAGE SECTION */}
       <div className="product-images">
 
         <div className="thumbnail-list">
@@ -43,7 +39,6 @@ const ProductDetails = ({ addToCart }) => {
 
       </div>
 
-      {/* PRODUCT INFO */}
       <div className="product-info">
 
         <h1>{product.name}</h1>
@@ -52,15 +47,13 @@ const ProductDetails = ({ addToCart }) => {
           ⭐⭐⭐⭐⭐ {product.rating}
         </div>
 
-        <h2>
-          ₹{product.price} / {product.weight}
-        </h2>
+        <h2>₹{product.price} / {product.weight}</h2>
 
         <h3>Ingredients</h3>
 
         <ul>
-          {product.ingredients?.map((item, index) => (
-            <li key={index}>{item}</li>
+          {product.ingredients?.map((i, idx) => (
+            <li key={idx}>{i}</li>
           ))}
         </ul>
 
