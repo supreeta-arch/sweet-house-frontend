@@ -7,8 +7,6 @@ const SHOP_ALL_CATEGORIES = [
   { title: "Sweets and Savours", slug: "sweets-savours", status: "active" },
   { title: "Spices and Millets", slug: "spices-millets", status: "coming-soon" },
   { title: "Dry Fruits", slug: "dry-fruits", status: "coming-soon" },
-  { title: "Organic", slug: "organic", status: "coming-soon" },
-  { title: "Gifting", slug: "gifting", status: "coming-soon" },
 ];
 
 export default function MegaMenu({ open, closeMenu }) {
@@ -16,71 +14,102 @@ export default function MegaMenu({ open, closeMenu }) {
 
   if (!open) return null;
 
+  const sweetsProducts = products.filter(
+    (p) => p.category === "sweets-savours"
+  );
+
+  const featured = sweetsProducts[0];
+
   return (
     <div className="absolute left-0 top-full w-full bg-white border-t shadow-2xl z-50">
 
-      {/* MEGA MENU GRID */}
-      <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-6 gap-10">
+      <div className="max-w-7xl mx-auto px-10 py-10 grid grid-cols-3 gap-12">
 
-        {SHOP_ALL_CATEGORIES.map((cat) => {
-          const items = products.filter((p) => p.category === cat.slug);
+        {/* CATEGORY LIST */}
+        <div>
+          <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase">
+            Categories
+          </h4>
 
-          return (
-            <div
-              key={cat.slug}
-              className={`min-h-[240px] ${
-                cat.slug === "sweets-savours" ? "col-span-2" : ""
-              }`}
-            >
+          <ul className="space-y-3">
+            {SHOP_ALL_CATEGORIES.map((cat) => (
+              <li key={cat.slug}>
+                <button
+                  className="text-gray-700 hover:text-purple-700 text-sm"
+                  onClick={() => {
+                    if (cat.status === "active") {
+                      navigate("/shop-all");
+                    }
+                    closeMenu();
+                  }}
+                >
+                  {cat.title}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-              {/* CATEGORY TITLE */}
-              <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase tracking-wide">
-                {cat.title}
-              </h4>
+        {/* PRODUCT LIST */}
+        <div>
+          <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase">
+            Sweets and Savours
+          </h4>
 
-              {/* NOT AVAILABLE */}
-              {cat.status === "na" && (
-                <div className="text-sm text-gray-400 italic">
-                  Not available
-                </div>
-              )}
+          <div className="grid grid-cols-2 gap-x-10 gap-y-2 max-h-[320px] overflow-y-auto">
+            {sweetsProducts.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  navigate(`/product/${item.id}`);
+                  closeMenu();
+                }}
+                className="text-left text-gray-700 hover:text-purple-700 hover:underline text-sm"
+              >
+                {item.name}
+              </button>
+            ))}
+          </div>
+        </div>
 
-              {/* COMING SOON */}
-              {cat.status === "coming-soon" && (
-                <div className="flex items-center gap-2 text-sm text-gray-400 italic">
-                  <span className="inline-block w-2 h-2 rounded-full bg-gray-300" />
-                  Coming soon
-                </div>
-              )}
+        {/* FEATURED PRODUCT */}
+        <div className="border rounded-xl p-4 bg-gray-50">
+          <h4 className="text-sm font-bold text-purple-700 mb-4 uppercase">
+            Featured
+          </h4>
 
-              {/* ACTIVE CATEGORY */}
-              {cat.status === "active" && (
-                <ul className="grid grid-cols-2 gap-x-8 gap-y-2 max-h-[300px] overflow-y-auto pr-2">
+          {featured && (
+            <div className="text-center">
+              <img
+                src={featured.image}
+                alt={featured.name}
+                className="h-28 mx-auto object-contain mb-3"
+              />
 
-                  {items.map((item) => (
-                    <li key={item.id}>
-                      <button
-                        onClick={() => {
-                          navigate(`/product/${item.id}`);
-                          closeMenu();
-                        }}
-                        className="text-left text-gray-700 hover:text-purple-700 hover:underline text-sm leading-snug transition"
-                      >
-                        {item.name}
-                      </button>
-                    </li>
-                  ))}
+              <p className="text-sm font-semibold mb-1">
+                {featured.name}
+              </p>
 
-                </ul>
-              )}
+              <p className="text-sm text-gray-600 mb-3">
+                ₹{featured.price} / {featured.weight}
+              </p>
 
+              <button
+                onClick={() => {
+                  navigate(`/product/${featured.id}`);
+                  closeMenu();
+                }}
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700"
+              >
+                View Product
+              </button>
             </div>
-          );
-        })}
+          )}
+        </div>
 
       </div>
 
-      {/* FOOTER STRIP */}
+      {/* FOOTER */}
       <div className="border-t bg-gray-50 py-3 text-center text-sm">
         <Link
           to="/shop-all"

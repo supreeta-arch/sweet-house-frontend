@@ -46,23 +46,49 @@ function ShopAllMegaMenu({ closeMenu }) {
                 </p>
               )}
 
-              {cat.status === "active" && (
-                <ul className="space-y-2">
-                  {items.map((item) => (
-                    <li key={item.id}>
-                      <button
-                        onClick={() => {
-                          navigate(`/product/${item.id}`);
-                          closeMenu();
-                        }}
-                        className="text-left text-sm hover:text-purple-700"
-                      >
-                        {item.name}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {cat.status === "active" && (() => {
+
+  const mid = Math.ceil(items.length / 2);
+  const left = items.slice(0, mid);
+  const right = items.slice(mid);
+
+  return (
+    <div className="grid grid-cols-2 gap-x-8">
+      <ul className="space-y-2">
+        {left.map((item) => (
+          <li key={item.id}>
+            <button
+              onClick={() => {
+                navigate(`/product/${item.id}`);
+                closeMenu();
+              }}
+              className="text-left text-sm hover:text-purple-700"
+            >
+              {item.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <ul className="space-y-2">
+        {right.map((item) => (
+          <li key={item.id}>
+            <button
+              onClick={() => {
+                navigate(`/product/${item.id}`);
+                closeMenu();
+              }}
+              className="text-left text-sm hover:text-purple-700"
+            >
+              {item.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+})()}
             </div>
           );
         })}
