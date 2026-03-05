@@ -4,24 +4,20 @@ const defaultProducts = [
   /* ---------------- SWEETS & SAVOURS ---------------- */
 
   {
-    id: 1,
-    name: "Kovil Patti Special Chikki",
-    category: "sweets-savours",
-    price: 160,
-    weight: "200g",
-    rating: 4.2,
-    inStock: true,
-    ingredients: ["Groundnuts", "Jaggery"],
-    image: "/IMG_1370.JPG",
-images: [
-"/IMG_1370.JPG",
-"/IMG_1371.JPG",
-"/IMG_1372.JPG",
-"/IMG_1373.JPG",
-"/IMG_1374.JPG",
-"/IMG_1424.JPG"
-]
-  },
+  id: 1,
+  name: "Kovil Patti Special Chikki",
+  price: 160,
+  weight: "200g",
+  rating: 4.2,
+  ingredients: ["Groundnuts","Jaggery"],
+  image: "/IMG_1370.JPG",
+  images: [
+    "/IMG_1370.JPG",
+    "/IMG_1371.JPG",
+    "/IMG_1372.JPG",
+    "/IMG_1373.JPG"
+  ]
+},
   {
     id: 2,
     name: "Chikki Round",

@@ -1,65 +1,109 @@
-import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import products from "../data/products";
-import "./ProductDetails.css";
+import { Star } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
-const ProductDetails = ({ addToCart }) => {
+export default function ProductDetails() {
   const { id } = useParams();
 
-  const product = products.find((p) => p.id === parseInt(id));
+  const product = products.find(
+    (p) => String(p.id) === id
+  );
+
+  const { addToCart } = useCart();
 
   if (!product) {
-    return <div style={{ padding: "40px" }}>Product not found</div>;
+    return (
+      <div className="text-center py-20">
+        <h2 className="text-xl font-semibold">
+          Product not found
+        </h2>
+      </div>
+    );
   }
 
-  const images = product.images || [product.image];
+  /* SUPPORT SINGLE OR MULTIPLE IMAGES */
+  const images = product.images
+    ? product.images
+    : [product.image];
 
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
+  /* GitHub Pages safe path */
+  const getImagePath = (img) =>
+    img?.startsWith("/")
+      ? `${import.meta.env.BASE_URL}${img.slice(1)}`
+      : img;
+
   return (
-    <div className="product-details-container">
+    <div className="max-w-6xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12">
 
-      <div className="product-images">
+      {/* IMAGE SECTION */}
+      <div className="flex gap-4">
 
-        <div className="thumbnail-list">
-          {images.map((img, index) => (
-            <img
-              key={index}
-              src={img}
-              alt="thumb"
-              className={`thumbnail ${selectedImage === img ? "active" : ""}`}
-              onClick={() => setSelectedImage(img)}
-            />
-          ))}
-        </div>
+        {/* THUMBNAILS */}
+        {images.length > 1 && (
+          <div className="flex flex-col gap-3">
+            {images.map((img, i) => (
+              <img
+                key={i}
+                src={getImagePath(img)}
+                onClick={() => setSelectedImage(img)}
+                className={`w-16 h-16 object-cover cursor-pointer border rounded 
+                  ${selectedImage === img ? "border-purple-600" : "border-gray-200"}`}
+              />
+            ))}
+          </div>
+        )}
 
-        <div className="main-image">
-          <img src={selectedImage} alt={product.name} />
-        </div>
+        {/* MAIN IMAGE */}
+        <img
+          src={getImagePath(selectedImage)}
+          alt={product.name}
+          className="w-full h-96 object-contain"
+        />
 
       </div>
 
-      <div className="product-info">
+      {/* DETAILS */}
+      <div>
 
-        <h1>{product.name}</h1>
+        <h1 className="text-3xl font-bold mb-3">
+          {product.name}
+        </h1>
 
-        <div className="rating">
-          ⭐⭐⭐⭐⭐ {product.rating}
+        <div className="flex items-center gap-1 text-yellow-500 mb-3">
+          {[...Array(5)].map((_, i) => (
+            <Star key={i} size={18} fill="currentColor" />
+          ))}
+          <span className="text-gray-600 ml-2">
+            {product.rating || 4.2}
+          </span>
         </div>
 
-        <h2>₹{product.price} / {product.weight}</h2>
+        <p className="text-xl font-semibold mb-4">
+          ₹{product.price} / {product.weight}
+        </p>
 
-        <h3>Ingredients</h3>
+        {/* INGREDIENTS */}
+        <div className="mb-6">
+          <h3 className="font-semibold mb-2">
+            Ingredients
+          </h3>
 
-        <ul>
-          {product.ingredients?.map((i, idx) => (
-            <li key={idx}>{i}</li>
-          ))}
-        </ul>
+          <ul className="list-disc list-inside text-gray-700">
+            {product.ingredients?.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </div>
 
         <button
-          className="add-to-cart"
-          onClick={() => addToCart(product)}
+          className="bg-purple-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-purple-700 transition"
+          onClick={() =>
+            addToCart({ ...product, quantity: 1 })
+          }
         >
           ADD TO CART
         </button>
@@ -68,6 +112,4 @@ const ProductDetails = ({ addToCart }) => {
 
     </div>
   );
-};
-
-export default ProductDetails;
+}
