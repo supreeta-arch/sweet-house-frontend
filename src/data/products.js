@@ -12,7 +12,7 @@ const defaultProducts = [
     rating: 4.2,
     inStock: true,
     ingredients: ["Groundnuts", "Jaggery"],
-    image: "/IMG_1370.JPG",
+    image: ["/IMG_1370.JPG","/IMG_1371.JPG","/IMG_1372.JPG","/IMG_1373.JPG","/IMG_1374.JPG","IMG_1424.JPG"],
   },
   {
     id: 2,
