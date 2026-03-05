@@ -6,9 +6,11 @@ const defaultProducts = [
   {
   id: 1,
   name: "Kovil Patti Special Chikki",
+  category: "sweets-savours",
   price: 160,
   weight: "200g",
   rating: 4.2,
+  inStock: true,
   ingredients: ["Groundnuts","Jaggery"],
   image: "/IMG_1370.JPG",
   images: [
